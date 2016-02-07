@@ -15,7 +15,6 @@ import android.widget.EditText;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -30,8 +29,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ArrayList<Marker> markerArray;
     private String m_Text;
-    private LatLng curLocation;
-    private Location curPoint;
+    private Location cPos;
+    private Marker closestMarker;
+    private LatLng mPos;
     private int curMarker = 0;
     static final int PICK_LOCATION = 0;
     public final static String EXTRA_MESSAGE = "com.hab.studyspace.MESSAGE";
@@ -45,7 +45,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        curLocation = new LatLng(41, 71);
         markerArray = new ArrayList<Marker>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -75,6 +74,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
+
+                new AlertDialog.Builder(MapsActivity.this)
+                        .setTitle("Your closest study spot is...")
+                        .setMessage(calculateClosest().getTitle())
+                        .setPositiveButton("Tell me More!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+
+
+                        .setIcon(android.R.drawable.ic_menu_compass)
+                        .show();
+
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 Criteria criteria = new Criteria();
                 String provider = locationManager.GPS_PROVIDER;
@@ -100,7 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onMapClick(LatLng point) {
-                final LatLng curPoint = new LatLng(point.latitude, point.longitude);
+                final LatLng curMark = new LatLng(point.latitude, point.longitude);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                 builder.setTitle("Name of Spot;Hours;Rating(1-5)");
 
@@ -115,12 +128,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         m_Text = input.getText().toString();
-                        if (m_Text.equals("Closest") || m_Text.equals("closest")) ;
-                        {
-                            //      this.calculateClosest();
-                        }
-                        markerArray.add(mMap.addMarker(new MarkerOptions().position(curPoint).title(m_Text)));
-                        System.out.println("Longitude: " + curPoint.latitude + "Latitude " + curPoint.longitude);
+                        markerArray.add(mMap.addMarker(new MarkerOptions().position(curMark).title(m_Text)));
+                        System.out.println("Longitude: " + curMark.latitude + "Latitude " + curMark.longitude);
                         System.out.println(markerArray.size());
                         System.out.println(m_Text);
                     }
@@ -141,22 +150,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public Marker calculateClosest() {
-        Double curDistance = 50000000000000.0;
-        Marker closestMarker = null;
-
+        Double curDistance = 5000000000000.0;
         for (int i = 0; i < markerArray.size(); i++) {
 
-            LatLng mPos = markerArray.get(i).getPosition();
+            mPos = markerArray.get(i).getPosition();
+
             Double mLat = mPos.latitude;
-            Double mLng = mPos.longitude;
+            Double mLong = mPos.longitude;
 
-
-            Double cLat = curPoint.getLatitude();
-            Double cLng = curPoint.getLatitude();
-            LatLng cLatLng = new LatLng(cLat, cLng);
-
+            LatLng cLatLng = new LatLng(cPos.getLatitude(), cPos.getLongitude());
 
             double distanceBetween = SphericalUtil.computeDistanceBetween(mPos, cLatLng);
+
 
             if (distanceBetween < curDistance) {
                 curDistance = SphericalUtil.computeDistanceBetween(mPos, cLatLng);
@@ -179,15 +184,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             System.out.println("fff");
         }
 
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
 
             @Override
-            public void onMyLocationChange(Location curPoint) {
+            public void onMyLocationChange(Location _cPos) {
                 // TODO Auto-generated method stub
-            System.out.println("Latitude: " + curPoint.getLatitude() + "Longitude: " + curPoint.getLongitude());
+                cPos = _cPos;
+            System.out.println("Latitude: " + cPos.getLatitude() + "Longitude: " + cPos.getLongitude());
             }
         });
  /*       LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
@@ -210,18 +213,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // populating with markers
   */
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(10, 10))
-                .title("Hello world"));
-
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(20, 20))
-                .title("Here"));
-
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(25, 20))
-                .title("There"));
-
         //mMap.setOnMarkerClickListener(this);
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
