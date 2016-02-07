@@ -25,7 +25,7 @@ public class AddSpaceActivity extends AppCompatActivity {
     private RatingBar mRating;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_space);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -93,8 +93,8 @@ public class AddSpaceActivity extends AppCompatActivity {
                     jsonObject.put("end", mEndTime.getText().toString());
                     jsonObject.put("rating", mRating.getRating());
                     jsonObject.put("capacity", Integer.parseInt(mCapacity.getText().toString()));
-                    jsonObject.put("lat", 0);
-                    jsonObject.put("long", 0);
+                    jsonObject.put("lat", getIntent().getExtras().getDouble("lat"));
+                    jsonObject.put("long", getIntent().getExtras().getDouble("lon"));
 
                     mServiceIntent.putExtra("data", jsonObject.toString());
                     AddSpaceActivity.this.startService(mServiceIntent);

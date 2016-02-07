@@ -2,6 +2,7 @@ package com.hab.studyspace;
 
 import android.app.Activity;
 import android.app.IntentService;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.EditText;
@@ -84,6 +85,9 @@ public class AddStudySpaceService extends IntentService {
             space.setEnd(end);
 
             mapper.save(space);
+
+            startService(new Intent(AddStudySpaceService.this, LoadStudySpaceService.class));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
