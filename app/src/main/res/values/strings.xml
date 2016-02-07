@@ -15,4 +15,7 @@
     <string name="default_start">08:00 AM</string>
     <string name="default_end">07:00 PM</string>
     <string name="load_space">Load Data</string>
+    <string name="label_capacity">Room Capacity:</string>
+    <string name="label_capacity2">people</string>
+    <string name="label_rating">Rating</string>
 </resources>

@@ -47,7 +47,7 @@ public class LoadStudySpaceService extends IntentService {
 
             String spaceJson = String.format("{ 'type':'Feature', 'geometry': { 'type': 'Point', 'coordinates': [%f, %f] },"
                 + "'properties': { 'name': '%s', 'n-people': %d, 'details': '%s', 'occupied': %b, 'public': %b, 'rating': %d, 'start': [ %d, %d ], 'end': [%d, %d], 'image-links': %s }}",
-                    space.getLng(), space.getLat(), space.getName(), space.getPeople(), space.getDetails(), space.isOccupied(), space.isPublicAccess(), space.getRating(),
+                    space.getLng(), space.getLat(), space.getName().replace("'", "\\'"), space.getPeople(), space.getDetails().replace("'","\\'"), space.isOccupied(), space.isPublicAccess(), space.getRating(),
                     space.getStart().get(0), space.getStart().get(1), space.getEnd().get(0), space.getEnd().get(1), Utils.printList(space.getImageLinks()));
             System.out.println(spaceJson);
             JSONObject place;
