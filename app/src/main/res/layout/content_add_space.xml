@@ -13,10 +13,11 @@
     tools:showIn="@layout/activity_add_space">
 
     <TextView
+        android:id="@+id/new_name_label"
         android:text="@string/label_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/new_name"
+        android:layout_alignParentTop="true"
         />
 
     <EditText
@@ -24,51 +25,76 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/label_name"
+        android:layout_below="@+id/new_name_label"
+        android:layout_marginBottom="@dimen/edit_text_margin"
         />
 
     <TextView
+        android:id="@+id/new_details_label"
         android:text="@string/label_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/new_details" />
+        android:layout_below="@+id/new_name" />
 
     <EditText
         android:id="@+id/new_details"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:hint="@string/label_details"
+        android:layout_below="@+id/new_details_label"
+        android:layout_marginBottom="@dimen/edit_text_margin"
         />
 
     <TextView
+        android:id="@+id/new_start_label"
         android:text="@string/label_start_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/new_start" />
+        android:gravity="center_vertical"
+        android:layout_below="@+id/new_details"
+        android:layout_alignTop="@+id/new_start"
+        android:layout_alignBottom="@+id/new_start"
+        android:padding="@dimen/time_label_padding"
+        />
 
-    <TimePicker
+    <EditText
         android:id="@+id/new_start"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_above="@+id/new_end">
-    </TimePicker>
+        android:text="@string/default_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/time_font_size"
+        android:layout_below="@+id/new_details"
+        android:layout_toRightOf="@+id/new_start_label"
+        android:layout_toEndOf="@+id/new_start_label">
+    </EditText>
 
     <TextView
+        android:id="@+id/new_end_label"
         android:text="@string/label_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/new_end" />
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/new_end"
+        android:layout_alignBottom="@+id/new_end"
+        android:layout_below="@+id/new_start_label"
+        android:padding="@dimen/time_label_padding"/>
 
-    <TimePicker
+    <EditText
         android:id="@+id/new_end"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_above="@+id/addSpace">
-    </TimePicker>
+        android:text="@string/default_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/time_font_size"
+        android:layout_below="@+id/new_start_label"
+        android:layout_toRightOf="@+id/new_end_label"
+        android:layout_toEndOf="@+id/new_end_label">
+    </EditText>
 
     <Button
         android:id="@+id/addSpace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_space"/>
+        android:text="@string/add_space"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
