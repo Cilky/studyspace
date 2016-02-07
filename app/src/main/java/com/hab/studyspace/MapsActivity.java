@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.geojson.GeoJsonFeature;
 import com.google.maps.android.geojson.GeoJsonLayer;
 import com.google.maps.android.geojson.GeoJsonPointStyle;
 
@@ -87,6 +88,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 GeoJsonPointStyle pointStyle = mLayer.getDefaultPointStyle();
                 pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker());
+
+                for (GeoJsonFeature feature : mLayer.getFeatures()) {
+                    GeoJsonPointStyle style = new GeoJsonPointStyle();
+                    style.setTitle(feature.getProperty("name"));
+                    style.setSnippet(feature.getProperty("details"));
+                    feature.setPointStyle(style);
+                }
+
                 mLayer.addLayerToMap();
 
 
