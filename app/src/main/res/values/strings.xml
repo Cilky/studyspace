@@ -14,4 +14,5 @@
     <string name="label_end_time">Closes at:</string>
     <string name="default_start">08:00 AM</string>
     <string name="default_end">07:00 PM</string>
+    <string name="load_space">Load Data</string>
 </resources>
