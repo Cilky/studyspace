@@ -12,13 +12,25 @@
     tools:context="com.hab.studyspace.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
+    <Button
+        android:id="@+id/addSpaceNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/add_space_nav"
+        android:layout_alignParentTop="true"/>
+
+    <Button
+        android:id="@+id/loadSpace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/load_space"
+        android:layout_below="@+id/addSpaceNav"/>
+
     <Button
         android:id="@+id/map_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map Activity"/>
+        android:text="Map Activity"
+        android:layout_below="@+id/loadSpace"/>
+
 </RelativeLayout>

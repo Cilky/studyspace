@@ -5,4 +5,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="add_space">Add Study Space</string>
+    <string name="add_space_nav">Create New Study Space</string>
+    <string name="title_activity_add_space">Add a Study Space</string>
+    <string name="label_name">Name</string>
+    <string name="label_details">Details</string>
+    <string name="label_start_time">Opens at:</string>
+    <string name="label_end_time">Closes at:</string>
+    <string name="default_start">08:00 AM</string>
+    <string name="default_end">07:00 PM</string>
+    <string name="load_space">Load Data</string>
 </resources>
