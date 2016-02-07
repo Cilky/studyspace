@@ -19,6 +19,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -257,7 +258,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMyLocationChange(Location curPoint) {
                 // TODO Auto-generated method stub
-            System.out.println("Latitude: " + curPoint.getLatitude() + "Longitude: " + curPoint.getLongitude());
+                System.out.println("Latitude: " + curPoint.getLatitude() + "Longitude: " + curPoint.getLongitude());
             }
         });
  /*       LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
@@ -280,17 +281,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // populating with markers
   */
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(10, 10))
-                .title("Hello world"));
-
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(20, 20))
-                .title("Here"));
-
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(25, 20))
-                .title("There"));
 
         //mMap.setOnMarkerClickListener(this);
 
@@ -300,21 +290,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public boolean onMarkerClick(Marker arg0) {
-                if (arg0.getTitle().equals("Hello world")) {// if marker source is clicked
 
-                    Intent intent = new Intent(MapsActivity.this, Multiview.class);
-                    String message = arg0.getPosition().toString();
-                    intent.putExtra(EXTRA_MESSAGE, message);
-
-                    startActivityForResult(intent, PICK_LOCATION);
-
-                } else if (arg0.getTitle().equals("Here")) {
                     Intent intent = new Intent(MapsActivity.this, Spaceview.class);
-                    String message = arg0.getPosition().toString();
+                    //Toast.makeText(MapsActivity.this, arg0.getTitle(), Toast.LENGTH_SHORT).show();// display toast
+                    String message = arg0.getTitle().toString();
                     intent.putExtra(EXTRA_MESSAGE, message);
-
-                    startActivityForResult(intent, PICK_LOCATION);
-                }
+                    startActivity(intent);
 
                 return true;
             }

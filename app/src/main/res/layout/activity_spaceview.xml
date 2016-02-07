@@ -5,7 +5,7 @@
     android:weightSum="1">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/space_img"
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:src="@drawable/studyspace"
@@ -15,10 +15,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Wilson 204"
-        android:id="@+id/textView"
+        android:text="Wilson"
+        android:id="@+id/space_name"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
         android:layout_weight="1" />
@@ -28,7 +28,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Capacity"
-        android:id="@+id/textView2"
         android:layout_marginLeft="20dp"
         android:layout_weight="1" />
 
@@ -37,9 +36,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="5"
-        android:id="@+id/textView3"
+        android:id="@+id/space_cap"
         android:layout_marginLeft="20dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="342dp"
@@ -48,14 +48,14 @@
         android:text="Description"
         android:id="@+id/textView4"
         android:layout_marginLeft="20dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="333dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="This is a really nice place."
-        android:id="@+id/textView5"
+        android:id="@+id/space_det"
         android:layout_marginLeft="20dp"
         android:layout_weight="1" />
 
@@ -72,8 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="8:00AM - 10:00 AM"
-        android:id="@+id/textView7"
+
+        android:id="@+id/space_hours"
         android:layout_marginLeft="20dp"
         android:layout_weight="1" />
 
@@ -82,10 +82,11 @@
         android:layout_height="wrap_content"
         android:text="Claim"
         android:id="@+id/button"
-        android:layout_gravity="right"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="0"
         android:layout_marginTop="35dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp" />
 
 
 </LinearLayout>
