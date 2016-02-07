@@ -23,7 +23,7 @@ import com.amazonaws.services.dynamodbv2.model.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Intent mServiceIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +50,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mServiceIntent = new Intent(MainActivity.this, AddStudySpaceService.class);
-
-        Button mAddButton = (Button) findViewById(R.id.addSpace);
+        Button mAddButton = (Button) findViewById(R.id.addSpaceNav);
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.this.startService(mServiceIntent);
+                Intent intent = new Intent(MainActivity.this, AddSpaceActivity.class);
+                startActivity(intent);
             }
         });
-
-
-
     }
 
     @Override

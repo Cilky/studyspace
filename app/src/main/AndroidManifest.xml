@@ -20,9 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".AddStudySpaceService"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <activity
+            android:name=".AddSpaceActivity"
+            android:label="@string/title_activity_add_space"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hab.studyspace.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

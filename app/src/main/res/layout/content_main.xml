@@ -16,9 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+
     <Button
-        android:id="@+id/addSpace"
+        android:id="@+id/addSpaceNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_space"/>
+        android:text="@string/add_space_nav"/>
 </RelativeLayout>
