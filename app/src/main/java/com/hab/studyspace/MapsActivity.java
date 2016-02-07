@@ -2,10 +2,13 @@ package com.hab.studyspace;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -13,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 
 import java.util.ArrayList;
 
@@ -22,13 +26,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String m_Text;
     private LatLng curLocation;
     private int curMarker = 0;
+    static final int PICK_LOCATION = 0;
+    public final static String EXTRA_MESSAGE = "com.hab.studyspace.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        curLocation = new LatLng(41,71);
+        curLocation = new LatLng(41, 71);
         markerArray = new ArrayList<Marker>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -45,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * installed Google Play services and returned to the app.
      */
     public LatLng getLocation() {
-        LatLng Cali = new LatLng(-48,151);
+        LatLng Cali = new LatLng(-48, 151);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override
@@ -67,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         m_Text = input.getText().toString();
                         if (m_Text.equals("Closest") || m_Text.equals("closest")) ;
                         {
-                      //      this.calculateClosest();
+                            //      this.calculateClosest();
                         }
                         markerArray.add(mMap.addMarker(new MarkerOptions().position(curPoint).title(m_Text)));
                         System.out.println("Longitude: " + curPoint.latitude + "Latitude " + curPoint.longitude);
@@ -88,7 +95,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         return Cali;
     }
-
 
   /*  public Marker calculateClosest() {
 
@@ -112,10 +118,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alert(mMap.markers[closest].title);
         }
     }
-  */  public void onMapReady(GoogleMap googleMap) {
+
+
+    // populating with markers
+  */
+
+    public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        this.getLocation();
-        // Add a marker in Sydney and move the camera
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(10, 10))
+                .title("Hello world"));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(20,20))
+                .title("Here"));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(25, 20))
+                .title("There"));
+
+        //mMap.setOnMarkerClickListener(this);
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            //Toast.makeText(MapsActivity.this, arg0.getTitle(), Toast.LENGTH_SHORT).show();// display toast
+
+            @Override
+            public boolean onMarkerClick(Marker arg0) {
+                if (arg0.getTitle().equals("Hello world")) {// if marker source is clicked
+
+                    Intent intent = new Intent(MapsActivity.this, Multiview.class);
+                    String message = arg0.getPosition().toString();
+                    intent.putExtra(EXTRA_MESSAGE, message);
+
+                    startActivityForResult(intent, PICK_LOCATION);
+
+                } else if(arg0.getTitle().equals("Here")) {
+                    Intent intent = new Intent(MapsActivity.this, Space.class);
+                    String message = arg0.getPosition().toString();
+                    intent.putExtra(EXTRA_MESSAGE, message);
+
+                    startActivityForResult(intent, PICK_LOCATION);
+                }
+
+                return true;
+            }
+        });
+
     }
 }
+
