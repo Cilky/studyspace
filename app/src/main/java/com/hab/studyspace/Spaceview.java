@@ -3,8 +3,6 @@ package com.hab.studyspace;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.google.android.gms.maps.SupportMapFragment;
-
 /**
  * Created by yidanzeng on 2/6/16.
  *
