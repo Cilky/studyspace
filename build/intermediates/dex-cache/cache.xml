@@ -1,2 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-8.4.0_f9669dd8a441e1d6796158cfc42f74754018eff0.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.1.1_77f4c456f91a1d964b8492b1e8af902767347d2e.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-8.4.0_c4136f64fcf42a4c3c03c51adbecb0c0c62665af.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_3f2c57883d6ccf319e2fd1edd69a9496f3be2ac4.jar" />
+    </item>
+    <item
+        jar="/home/ivy/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-android-sdk-ddb-mapper/2.2.11/e37659b0f500bbf6c8147cf3abe07d8283bdd1cc/aws-android-sdk-ddb-mapper-2.2.11.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e37659b0f500bbf6c8147cf3abe07d8283bdd1cc">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/aws-android-sdk-ddb-mapper-2.2.11_ed78276152894a3cae6a758e7238e80fa49fa726.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.1.1_6e208be0622cdfddeca23f5b0a69046c9a313092.jar" />
+    </item>
+    <item
+        jar="/home/ivy/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-android-sdk-s3/2.2.11/4aa510782be09934b13b0259ac3246a4be164c27/aws-android-sdk-s3-2.2.11.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4aa510782be09934b13b0259ac3246a4be164c27">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/aws-android-sdk-s3-2.2.11_a239ce36399f0d515bdd7c6f020ce71e9d1d4a5c.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.4.0_ad518322cb60b2afe96b71fb725142ef90b0cc81.jar" />
+    </item>
+    <item
+        jar="/home/ivy/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1_be3d9177dc26e2bd2dbcd4c2bb18106a35f29971.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.1.1_b4e7381238bb04530866fb42518b2ab10462938b.jar" />
+    </item>
+    <item
+        jar="/home/ivy/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-android-sdk-cognito/2.2.11/a0a93d1bd95a14a80a86bf197eb8db507031e832/aws-android-sdk-cognito-2.2.11.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a0a93d1bd95a14a80a86bf197eb8db507031e832">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/aws-android-sdk-cognito-2.2.11_7a722e6e9610dd6c0ce565002cdd7680183a4723.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.4.0_97dd3d52780c86134c1e2dec7f488ead4781ede5.jar" />
+    </item>
+    <item
+        jar="/home/ivy/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-android-sdk-ddb/2.2.11/41a827cf332869dd2c43a844686a1895e4900f46/aws-android-sdk-ddb-2.2.11.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="41a827cf332869dd2c43a844686a1895e4900f46">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/aws-android-sdk-ddb-2.2.11_d5b1fe30120965739501228165e77ed0848bf0ad.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.1.1_06a2663c85482917f823b81fc37e18c1e5e7cd6c.jar" />
+    </item>
+    <item
+        jar="/home/ivy/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-android-sdk-core/2.2.11/26f86360a57bc6f750e8ee1628c45e1eda4abe68/aws-android-sdk-core-2.2.11.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="26f86360a57bc6f750e8ee1628c45e1eda4abe68">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/aws-android-sdk-core-2.2.11_5f6896b2053c930529e1c372c046679774a37f9e.jar" />
+    </item>
+    <item
+        jar="/home/ivy/projects/studyspace/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-maps-8.4.0_a71f043b5618229917e170cf1a6dfe0690a6091d.jar" />
+    </item>
+    <item
+        jar="/home/ivy/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568">
+        <dex dex="/home/ivy/projects/studyspace/app/build/intermediates/pre-dexed/debug/gson-2.2.4_c322e87cf0cf0efc1552c9ad62455d8a4f2ac5f1.jar" />
+    </item>
+
+</items>
