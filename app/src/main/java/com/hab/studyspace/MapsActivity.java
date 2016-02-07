@@ -1,15 +1,23 @@
 package com.hab.studyspace;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+
+import android.content.IntentFilter;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.appindexing.Action;
@@ -18,15 +26,26 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
 
+import com.google.maps.android.geojson.GeoJsonFeature;
+import com.google.maps.android.geojson.GeoJsonLayer;
+import com.google.maps.android.geojson.GeoJsonPointStyle;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
     private GoogleMap mMap;
+    private GeoJsonLayer mLayer;
+    private Intent mServiceIntent;
     private ArrayList<Marker> markerArray;
     private String m_Text;
     private Location cPos;
@@ -57,7 +76,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        mServiceIntent = new Intent(MapsActivity.this, LoadStudySpaceService.class);
+
+        Button mLoadButton = (Button) findViewById(R.id.loadSpace);
+        mLoadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MapsActivity.this.startService(mServiceIntent);
+            }
+        });
+
+        try {
+            mLayer = new GeoJsonLayer(mMap, new JSONObject("{}"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mDataReceiver, new IntentFilter("LoadStudySpaceService"));
     }
+
+    private BroadcastReceiver mDataReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                JSONObject places = new JSONObject(intent.getStringExtra("json"));
+                System.out.println("Got json data");
+                System.out.println(places);
+
+                if(mLayer != null) {
+                    mLayer.removeLayerFromMap();
+                }
+
+                mLayer = new GeoJsonLayer(mMap, places);
+
+                GeoJsonPointStyle pointStyle = mLayer.getDefaultPointStyle();
+                pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker());
+
+                for (GeoJsonFeature feature : mLayer.getFeatures()) {
+                    GeoJsonPointStyle style = new GeoJsonPointStyle();
+                    style.setTitle(feature.getProperty("name"));
+                    style.setSnippet(feature.getProperty("details"));
+                    feature.setPointStyle(style);
+                }
+
+                mLayer.addLayerToMap();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
     /**
      * Manipulates the map once available.
@@ -230,7 +300,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     startActivityForResult(intent, PICK_LOCATION);
 
                 } else if (arg0.getTitle().equals("Here")) {
-                    Intent intent = new Intent(MapsActivity.this, Space.class);
+                    Intent intent = new Intent(MapsActivity.this, Spaceview.class);
                     String message = arg0.getPosition().toString();
                     intent.putExtra(EXTRA_MESSAGE, message);
 
