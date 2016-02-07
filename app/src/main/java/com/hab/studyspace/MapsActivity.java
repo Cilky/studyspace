@@ -2,6 +2,7 @@ package com.hab.studyspace;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,13 +17,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.maps.android.SphericalUtil;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
 
@@ -33,11 +33,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng curLocation;
     private Location curPoint;
     private int curMarker = 0;
+    static final int PICK_LOCATION = 0;
+    public final static String EXTRA_MESSAGE = "com.hab.studyspace.MESSAGE";
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerArray = new ArrayList<Marker>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -66,22 +71,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     public LatLng getLocation() {
         LatLng Cali = new LatLng(-48, 151);
-        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
+
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
-            public boolean onMyLocationButtonClick()
-            {
-                LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+            public boolean onMyLocationButtonClick() {
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 Criteria criteria = new Criteria();
                 String provider = locationManager.GPS_PROVIDER;
-                Location myLocation = locationManager.getLastKnownLocation(provider);
-                System.out.println("hi");
-                if(myLocation != null) {
+                Location myLocation;
 
-                    System.out.println("i did it!" + myLocation.getAltitude());
+                try {
+                    myLocation = locationManager.getLastKnownLocation(provider);
+                    System.out.println("hi");
+                    if (myLocation != null) {
+
+                        System.out.println("i did it!" + myLocation.getAltitude());
+                    }
+                } catch (SecurityException e) {
+                    System.out.println("oh no");
                 }
+
                 return false;
             }
         });
+
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
@@ -127,41 +140,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-      public Marker calculateClosest() {
-          Double curDistance = 50000000000000;
-          Marker closestMarker = null;
+    public Marker calculateClosest() {
+        Double curDistance = 50000000000000.0;
+        Marker closestMarker = null;
 
-          for(int i=0;i<markerArray.size(); i++ ) {
+        for (int i = 0; i < markerArray.size(); i++) {
 
-              LatLng mPos = markerArray.get(i).getPosition();
-              Double mLat = mPos.latitude;
-              Double mLng = mPos.longitude;
-
-
-              Double cLat  = curPoint.getLatitude();
-              Double cLng  = curPoint.getLatitude();
-              LatLng cLatLng = new LatLng(cLat,cLng);
+            LatLng mPos = markerArray.get(i).getPosition();
+            Double mLat = mPos.latitude;
+            Double mLng = mPos.longitude;
 
 
+            Double cLat = curPoint.getLatitude();
+            Double cLng = curPoint.getLatitude();
+            LatLng cLatLng = new LatLng(cLat, cLng);
 
 
-              double distanceBetween = SphericalUtil.computeDistanceBetween(mPos,cLatLng);
+            double distanceBetween = SphericalUtil.computeDistanceBetween(mPos, cLatLng);
 
-              if ( distanceBetween < curDistance ) {
-                  curDistance = SphericalUtil.computeDistanceBetween(mPos,cLatLng);
-                    closestMarker = markerArray.get(i);
+            if (distanceBetween < curDistance) {
+                curDistance = SphericalUtil.computeDistanceBetween(mPos, cLatLng);
+                closestMarker = markerArray.get(i);
 
-              }
-          }
+            }
+        }
+        return closestMarker;
 
-          alert(mMap.markers[closest].title);
-          }
-      }
+    }
+
 
     public void onMapReady(GoogleMap googleMap) {
         System.out.println("should work");
         mMap = googleMap;
-        mMap.setMyLocationEnabled(true);
+
+        try {
+            mMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            System.out.println("fff");
+        }
+
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
@@ -188,9 +205,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Double latitude = myLoc.getLatitude();
             System.out.println("Cur Long" + longitude);
         }
-*/         this.getLocation();
+    }
 
-        // Add a marker in Sydney and move the camera
+
+    // populating with markers
+  */
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(10, 10))
+                .title("Hello world"));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(20, 20))
+                .title("Here"));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(25, 20))
+                .title("There"));
+
+        //mMap.setOnMarkerClickListener(this);
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            //Toast.makeText(MapsActivity.this, arg0.getTitle(), Toast.LENGTH_SHORT).show();// display toast
+
+            @Override
+            public boolean onMarkerClick(Marker arg0) {
+                if (arg0.getTitle().equals("Hello world")) {// if marker source is clicked
+
+                    Intent intent = new Intent(MapsActivity.this, Multiview.class);
+                    String message = arg0.getPosition().toString();
+                    intent.putExtra(EXTRA_MESSAGE, message);
+
+                    startActivityForResult(intent, PICK_LOCATION);
+
+                } else if (arg0.getTitle().equals("Here")) {
+                    Intent intent = new Intent(MapsActivity.this, Space.class);
+                    String message = arg0.getPosition().toString();
+                    intent.putExtra(EXTRA_MESSAGE, message);
+
+                    startActivityForResult(intent, PICK_LOCATION);
+                }
+
+                return true;
+            }
+        });
+
+        this.getLocation();
+
     }
 
     @Override
@@ -232,3 +293,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         client.disconnect();
     }
 }
+
