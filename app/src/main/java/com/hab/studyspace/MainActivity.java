@@ -1,5 +1,6 @@
 package com.hab.studyspace;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,15 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-/*
+import android.widget.Button;
+
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.*;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.*;
-import com.amazonaws.services.dynamodbv2.model.*;*/
+import com.amazonaws.services.dynamodbv2.model.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Intent mServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +49,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        /*
-        // Initialize the Amazon Cognito credentials provider
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),
-                "us-east-1:acc15fca-109c-4baf-a2aa-b7635223ab63", // Identity Pool ID
-                Regions.US_EAST_1 // Region
-        );
 
-        AmazonDynamoDBClient ddbClient = new AmazonDynamoDBClient(credentialsProvider);
+        mServiceIntent = new Intent(MainActivity.this, AddStudySpaceService.class);
 
-        DynamoDBMapper mapper = new DynamoDBMapper(ddbClient);
+        Button mAddButton = (Button) findViewById(R.id.addSpace);
+        mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.this.startService(mServiceIntent);
+            }
+        });
 
-        StudySpace space = new StudySpace();
-        space.setName("Solomon 101");
-        mapper.save(space);*/
+
 
     }
 
