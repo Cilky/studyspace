@@ -94,6 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mDataReceiver, new IntentFilter("LoadStudySpaceService"));
+        MapsActivity.this.startService(mServiceIntent);
     }
 
     private BroadcastReceiver mDataReceiver = new BroadcastReceiver() {
@@ -184,9 +185,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMapClick(LatLng point) {
                 final LatLng curMark = new LatLng(point.latitude, point.longitude);
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                builder.setTitle("Name of Spot;Hours;Rating(1-5)");
 
+                Intent intent = new Intent(MapsActivity.this, AddSpaceActivity.class);
+                intent.putExtra("lat", point.latitude);
+                intent.putExtra("lon", point.longitude);
+
+                MapsActivity.this.startActivity(intent);
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+
+                builder.setTitle("Name of Spot;Hours;Rating(1-5)");
 
                 final EditText input = new EditText(MapsActivity.this);
 
@@ -212,7 +219,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
-                builder.show();
+                builder.show();*/
+
             }
         });
         return Cali;
