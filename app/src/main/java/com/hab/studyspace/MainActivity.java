@@ -23,6 +23,7 @@ import com.amazonaws.services.dynamodbv2.model.*;*/
  * ACTIVITY: first screen, map view of current location and menu options
  *
  */
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
