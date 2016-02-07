@@ -35,7 +35,7 @@
             android:label="@string/app_name">
         </activity>
 
-        <activity android:name=".Roomview"
+        <activity android:name=".Spaceview"
             android:label="@string/app_name">
         </activity>
     </application>

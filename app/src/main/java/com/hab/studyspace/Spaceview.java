@@ -10,7 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment;
  *
  * ACTIVITY: View when user is looking at a single room.
  */
-public class Roomview extends FragmentActivity {
+public class Spaceview extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
