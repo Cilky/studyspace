@@ -16,6 +16,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.maps.android.SphericalUtil;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -126,7 +127,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    /*  public Marker calculateClosest() {
+      public Marker calculateClosest() {
+          Double curDistance = 50000000000000;
+          Marker closestMarker = null;
 
           for(int i=0;i<markerArray.size(); i++ ) {
 
@@ -135,20 +138,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
               Double mLng = mPos.longitude;
 
 
-              Double cLat  = curLocation.longitude;
-              Double cLng  = curLocation.latitude;
+              Double cLat  = curPoint.getLatitude();
+              Double cLng  = curPoint.getLatitude();
+              LatLng cLatLng = new LatLng(cLat,cLng);
 
-              double distanceBetween = SphericalUtil.compueteDistanceBetween(markerArray.get(i).getPosition(), curLocation)
 
-              if ( closest == -1 || d < distances[closest] ) {
-                  closest = i;
+
+
+              double distanceBetween = SphericalUtil.computeDistanceBetween(mPos,cLatLng);
+
+              if ( distanceBetween < curDistance ) {
+                  curDistance = SphericalUtil.computeDistanceBetween(mPos,cLatLng);
+                    closestMarker = markerArray.get(i);
+
               }
           }
 
           alert(mMap.markers[closest].title);
           }
       }
-    */
+
     public void onMapReady(GoogleMap googleMap) {
         System.out.println("should work");
         mMap = googleMap;
