@@ -1,23 +1,41 @@
 package com.hab.studyspace;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
+import android.util.JsonReader;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.geojson.GeoJsonLayer;
+import com.google.maps.android.geojson.GeoJsonPointStyle;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
     private GoogleMap mMap;
+    private GeoJsonLayer mLayer;
+    private Intent mServiceIntent;
     private ArrayList<Marker> markerArray;
     private String m_Text;
     private LatLng curLocation;
@@ -33,7 +51,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mServiceIntent = new Intent(MapsActivity.this, LoadStudySpaceService.class);
+
+        Button mLoadButton = (Button) findViewById(R.id.loadSpace);
+        mLoadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MapsActivity.this.startService(mServiceIntent);
+            }
+        });
+
+        try {
+            mLayer = new GeoJsonLayer(mMap, new JSONObject("{}"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mDataReceiver, new IntentFilter("LoadStudySpaceService"));
     }
+
+    private BroadcastReceiver mDataReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                JSONObject places = new JSONObject(intent.getStringExtra("json"));
+                System.out.println("Got json data");
+                System.out.println(places);
+
+                if(mLayer != null) {
+                    mLayer.removeLayerFromMap();
+                }
+
+                mLayer = new GeoJsonLayer(mMap, places);
+
+                GeoJsonPointStyle pointStyle = mLayer.getDefaultPointStyle();
+                pointStyle.setIcon(BitmapDescriptorFactory.defaultMarker());
+                mLayer.addLayerToMap();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
     /**
      * Manipulates the map once available.

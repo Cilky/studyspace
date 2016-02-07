@@ -18,7 +18,6 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Intent mServiceIntent;
     Button mMap;
 
     @Override
@@ -55,15 +54,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        mServiceIntent = new Intent(MainActivity.this, LoadStudySpaceService.class);
 
-        Button mLoadButton = (Button) findViewById(R.id.loadSpace);
-        mLoadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.this.startService(mServiceIntent);
-            }
-        });
 
         mMap = (Button) findViewById(R.id.map_nav);
         mMap.setOnClickListener(new View.OnClickListener() {

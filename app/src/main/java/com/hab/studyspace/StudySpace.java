@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ivy on 2/6/16.
  */
@@ -16,11 +19,24 @@ import android.os.IBinder;
 public class StudySpace {
     private String name;
     private String details;
-    private String[] imageLinks;
+    private List<String> imageLinks;
     private double lat, lng;
-    private int[] start, end;
+    private List<Integer> start, end;
     private int people, rating;
     private boolean publicAccess, occupied;
+
+    public StudySpace(){
+        setName("");
+        setDetails("");
+
+        List<String> links = new ArrayList<>();
+        setImageLinks(links);
+
+        setPeople(-1);
+        setRating(-1);
+        setPublicAccess(true);
+        setOccupied(false);
+    }
 
     @DynamoDBHashKey(attributeName = "name")
     public String getName() {
@@ -41,11 +57,11 @@ public class StudySpace {
     }
 
     @DynamoDBAttribute(attributeName = "image-links")
-    public String[] getImageLinks() {
+    public List<String> getImageLinks() {
         return imageLinks;
     }
 
-    public void setImageLinks(String[] imageLinks) {
+    public void setImageLinks(List<String> imageLinks) {
         this.imageLinks = imageLinks;
     }
 
@@ -68,20 +84,20 @@ public class StudySpace {
     }
 
     @DynamoDBAttribute(attributeName = "start")
-    public int[] getStart() {
+    public List<Integer> getStart() {
         return start;
     }
 
-    public void setStart(int[] start) {
+    public void setStart(List<Integer> start) {
         this.start = start;
     }
 
     @DynamoDBAttribute(attributeName = "end")
-    public int[] getEnd() {
+    public List<Integer> getEnd() {
         return end;
     }
 
-    public void setEnd(int[] end) {
+    public void setEnd(List<Integer> end) {
         this.end = end;
     }
 
@@ -119,6 +135,10 @@ public class StudySpace {
 
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
+    }
+
+    public String toString(){
+        return String.format("Name: %s, (%f, %f), %s", getName(), getLat(), getLng(), getDetails());
     }
 
 }
