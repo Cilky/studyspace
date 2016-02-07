@@ -1,16 +1,29 @@
 package com.hab.studyspace;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -25,9 +38,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Marker> markerArray;
     private String m_Text;
     private LatLng curLocation;
+    private Location curPoint;
     private int curMarker = 0;
     static final int PICK_LOCATION = 0;
     public final static String EXTRA_MESSAGE = "com.hab.studyspace.MESSAGE";
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +61,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     /**
@@ -53,6 +78,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     public LatLng getLocation() {
         LatLng Cali = new LatLng(-48, 151);
+
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
+                String provider = locationManager.GPS_PROVIDER;
+                Location myLocation;
+
+                try {
+                    myLocation = locationManager.getLastKnownLocation(provider);
+                    System.out.println("hi");
+                    if (myLocation != null) {
+
+                        System.out.println("i did it!" + myLocation.getAltitude());
+                    }
+                } catch (SecurityException e) {
+                    System.out.println("oh no");
+                }
+
+                return false;
+            }
+        });
+
+
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override
@@ -96,37 +146,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return Cali;
     }
 
-  /*  public Marker calculateClosest() {
 
-        for(int i=0;i<markerArray.size(); i++ ) {
+    /*  public Marker calculateClosest() {
 
-            LatLng mPos = markerArray.get(i).getPosition();
-            Double mLat = mPos.latitude;
-            Double mLng = mPos.longitude;
+          for(int i=0;i<markerArray.size(); i++ ) {
+
+              LatLng mPos = markerArray.get(i).getPosition();
+              Double mLat = mPos.latitude;
+              Double mLng = mPos.longitude;
 
 
-            Double cLat  = curLocation.longitude;
-            Double cLng  = curLocation.latitude;
+              Double cLat  = curLocation.longitude;
+              Double cLng  = curLocation.latitude;
 
-            double distanceBetween = SphericalUtil.compueteDistanceBetween(markerArray.get(i).getPosition(), curLocation)
+              double distanceBetween = SphericalUtil.compueteDistanceBetween(markerArray.get(i).getPosition(), curLocation)
 
-            if ( closest == -1 || d < distances[closest] ) {
-                closest = i;
-            }
+              if ( closest == -1 || d < distances[closest] ) {
+                  closest = i;
+              }
+          }
+
+          alert(mMap.markers[closest].title);
+          }
+      }
+    */
+    public void onMapReady(GoogleMap googleMap) {
+        System.out.println("should work");
+        mMap = googleMap;
+
+        try {
+            mMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            System.out.println("fff");
         }
 
-        alert(mMap.markers[closest].title);
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+
+            @Override
+            public void onMyLocationChange(Location curPoint) {
+                // TODO Auto-generated method stub
+            System.out.println("Latitude: " + curPoint.getLatitude() + "Longitude: " + curPoint.getLongitude());
+            }
+        });
+ /*       LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria,true);
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+        if(myLocation == null){
+            System.out.println("empty");
+            Double latitude = sydney.latitude;
+            Double longitude = sydney.longitude;
+        }
+        else{
+            Location myLoc = locationManager.getLastKnownLocation(provider);
+            Double longitude = myLoc.getLongitude();
+            Double latitude = myLoc.getLatitude();
+            System.out.println("Cur Long" + longitude);
         }
     }
 
 
     // populating with markers
   */
-
-    public void onMapReady(GoogleMap googleMap) {
-
-        mMap = googleMap;
-
         mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(10, 10))
                 .title("Hello world"));
@@ -167,6 +251,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        this.getLocation();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Maps Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.hab.studyspace/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Maps Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.hab.studyspace/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }
 
